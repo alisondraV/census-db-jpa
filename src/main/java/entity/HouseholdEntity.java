@@ -34,25 +34,25 @@ public class HouseholdEntity {
     @Column(name = "numberReported", nullable = false)
     private int numberReported;
     @ManyToOne
-    @JoinColumn(name = "geographicArea", referencedColumnName = "geographicAreaID", nullable = false)
+    @JoinColumn(name = "geographicArea", referencedColumnName = "geographicAreaID", nullable = false, insertable = false, updatable = false)
     private GeographicareaEntity geographicareaByGeographicArea;
     @ManyToOne
-    @JoinColumn(name = "householdType", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "householdType", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private HouseholdtypeEntity householdtypeByHouseholdType;
     @ManyToOne
-    @JoinColumn(name = "householdType", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "householdType", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private HouseholdtypeEntity householdtypeByHouseholdType_0;
     @ManyToOne
-    @JoinColumn(name = "householdSize", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "householdSize", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private HouseholdsizeEntity householdsizeByHouseholdSize;
     @ManyToOne
-    @JoinColumn(name = "householdsByAgeRange", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "householdsByAgeRange", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private HouseholdsbyagerangeEntity householdsbyagerangeByHouseholdsByAgeRange;
     @ManyToOne
-    @JoinColumn(name = "householdEarners", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "householdEarners", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private HouseholdearnersEntity householdearnersByHouseholdEarners;
     @ManyToOne
-    @JoinColumn(name = "totalIncome", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "totalIncome", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private TotalincomeEntity totalincomeByTotalIncome;
 
     public int getId() {

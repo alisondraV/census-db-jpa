@@ -28,13 +28,13 @@ public class AgeEntity {
     @Column(name = "female", nullable = false)
     private int female;
     @ManyToOne
-    @JoinColumn(name = "ageGroup", referencedColumnName = "ageGroupID", nullable = false)
+    @JoinColumn(name = "ageGroup", referencedColumnName = "ageGroupID", nullable = false, insertable = false, updatable = false)
     private AgegroupEntity agegroupByAgeGroup;
     @ManyToOne
-    @JoinColumn(name = "censusYear", referencedColumnName = "censusYearID", nullable = false)
+    @JoinColumn(name = "censusYear", referencedColumnName = "censusYearID", nullable = false, insertable = false, updatable = false)
     private CensusyearEntity censusyearByCensusYear;
     @ManyToOne
-    @JoinColumn(name = "geographicArea", referencedColumnName = "geographicAreaID", nullable = false)
+    @JoinColumn(name = "geographicArea", referencedColumnName = "geographicAreaID", nullable = false, insertable = false, updatable = false)
     private GeographicareaEntity geographicareaByGeographicArea;
 
     public int getAgeId() {

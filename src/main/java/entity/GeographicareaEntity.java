@@ -68,6 +68,19 @@ public class GeographicareaEntity {
     }
 
     @Override
+    public String toString() {
+        return "{ " +
+                "geographicAreaId=" + geographicAreaId +
+                ", code=" + code +
+                ", level=" + level +
+                ", name='" + name + '\'' +
+                ", alternativeCode=" + alternativeCode +
+                ", agesByGeographicAreaId=" + agesByGeographicAreaId +
+                ", householdsByGeographicAreaId=" + householdsByGeographicAreaId +
+                " }";
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
