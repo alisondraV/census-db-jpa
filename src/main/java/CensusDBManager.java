@@ -1,3 +1,4 @@
+import entity.AgeEntity;
 import entity.GeographicareaEntity;
 
 import javax.persistence.*;
@@ -32,11 +33,41 @@ public class CensusDBManager {
         System.out.println();
 
         // For task 6
-//        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-//        CriteriaQuery<GeographicareaEntity> geoQuery = criteriaBuilder.createQuery(GeographicareaEntity.class);
-//        Root<GeographicareaEntity> geoArea = geoQuery.from(GeographicareaEntity.class);
-//        Predicate predicate = criteriaBuilder.equal(geoArea.get(""))
-//        TypedQuery<GeographicareaEntity> query = entityManager.createQuery();
+        System.out.println("********************************************************************************************************************************************************************************************");
+        System.out.println("TASK 6: Criteria Query");
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+
+        // Question a.
+        System.out.println("a. Geographic Areas:");
+        CriteriaQuery<GeographicareaEntity> geoAreasCriteriaQuery = criteriaBuilder.createQuery(GeographicareaEntity.class);
+        Root<GeographicareaEntity> geoAreaEntityRoot = geoAreasCriteriaQuery.from(GeographicareaEntity.class);
+
+        geoAreasCriteriaQuery.multiselect(geoAreaEntityRoot.get("code"), geoAreaEntityRoot.get("level"), geoAreaEntityRoot.get("name"));
+        CriteriaQuery<GeographicareaEntity> multiSelect = geoAreasCriteriaQuery.select(geoAreaEntityRoot);
+        TypedQuery<GeographicareaEntity> geoQuery = entityManager.createQuery(multiSelect).setMaxResults(10);
+        geoQuery.getResultList().forEach(ga -> System.out.println("Code: " + ga.getCode() + " Level: "+
+                        ga.getLevel() + " Name: " + ga.getName()));
+        System.out.println();
+
+        // Question b.
+        System.out.println("b. Top 20 combined Age information");
+        CriteriaQuery<AgeEntity> ageCriteriaQuery = criteriaBuilder.createQuery(AgeEntity.class);
+        Root<AgeEntity> ageEntityRoot = ageCriteriaQuery.from(AgeEntity.class);
+
+        ageCriteriaQuery.orderBy(criteriaBuilder.desc(ageEntityRoot.get("combined")));
+        CriteriaQuery<AgeEntity> orderBy = ageCriteriaQuery.select(ageEntityRoot);
+        TypedQuery<AgeEntity> ageQuery = entityManager.createQuery(orderBy).setMaxResults(20);
+        ageQuery.getResultList().forEach(age -> System.out.println(age.getCombined()));
+        System.out.println();
+
+        // Question c.
+        System.out.println("c. Geographic Area named 'Peterborough'");
+        Predicate geoAreaPredicate = criteriaBuilder.equal(geoAreaEntityRoot.get("name"),"Peterborough");
+        geoAreasCriteriaQuery.where(geoAreaPredicate);
+        CriteriaQuery<GeographicareaEntity> whereClause = geoAreasCriteriaQuery.select(geoAreaEntityRoot);
+        TypedQuery<GeographicareaEntity> peterboroughQuery = entityManager.createQuery(whereClause);
+        System.out.println(peterboroughQuery.getSingleResult().toString());
+        System.out.println();
 
         transaction.commit();
         entityManager.close();
