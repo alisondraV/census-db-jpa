@@ -11,6 +11,9 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Main execution class
+ */
 public class CensusDBManager {
     public static void main(String[] args) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CensusDBManager");

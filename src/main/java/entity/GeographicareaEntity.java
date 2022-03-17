@@ -2,7 +2,9 @@ package entity;
 
 import javax.persistence.*;
 import java.util.Collection;
-
+/**
+ * Represents the GEOGRAPHICAREA table
+ */
 @Entity
 @Table(name = "GEOGRAPHICAREA", schema = "CENSUSDB")
 public class GeographicareaEntity {

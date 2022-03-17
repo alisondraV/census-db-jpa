@@ -3,6 +3,9 @@ package entity;
 import javax.persistence.*;
 import java.util.Collection;
 
+/**
+ * Represents the AGEGROUP table
+ */
 @Entity
 @Table(name = "AGEGROUP", schema = "CENSUSDB")
 public class AgegroupEntity {

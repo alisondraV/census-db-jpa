@@ -2,6 +2,9 @@ package entity;
 
 import javax.persistence.*;
 
+/**
+ * Represents the USER table
+ */
 @Entity
 @Table(name = "USER", schema = "CENSUSDB")
 public class UserEntity {

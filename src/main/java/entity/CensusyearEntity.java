@@ -3,6 +3,9 @@ package entity;
 import javax.persistence.*;
 import java.util.Collection;
 
+/**
+ * Represents the CENSUSYEAR table
+ */
 @Entity
 @Table(name = "CENSUSYEAR", schema = "CENSUSDB")
 public class CensusyearEntity {

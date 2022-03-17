@@ -10,6 +10,9 @@ import java.util.Collection;
         )
 )
 
+/**
+ * Represents the TOTALINCOME table
+ */
 @Entity
 @Table(name = "TOTALINCOME", schema = "CENSUSDB")
 public class TotalincomeEntity {

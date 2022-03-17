@@ -2,6 +2,9 @@ package entity;
 
 import javax.persistence.*;
 
+/**
+ * Represents the AGE table
+ */
 @Entity
 @Table(name = "AGE", schema = "CENSUSDB")
 public class AgeEntity {
