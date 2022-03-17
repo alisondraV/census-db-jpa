@@ -1,5 +1,7 @@
+import VM.GeoAreaGroup;
 import entity.AgeEntity;
 import entity.GeographicareaEntity;
+import entity.TotalincomeEntity;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -49,20 +51,16 @@ public class CensusDBManager {
         System.out.println("TASK 5: Number of records with specified properties");
 
         Query coupleQuery = entityManager.createQuery("select count(h.id) from HouseholdEntity h join HouseholdtypeEntity ht on h.householdType = ht.id where ht.id = 4 group by ht.id");
-        Optional numberOfCouples = coupleQuery.getResultList().stream().findFirst();
-        System.out.println("Number of couple census families without other persons in the household: " + numberOfCouples.get());
+        System.out.println("Number of couple census families without other persons in the household: " + coupleQuery.getSingleResult());
 
         Query twoOrMoreQuery = entityManager.createQuery("select count(h.id) from HouseholdEntity h join HouseholdsizeEntity hs on h.householdSize = hs.id where hs.id = 3 group by hs.id");
-        Optional numberOfTwos = twoOrMoreQuery.getResultList().stream().findFirst();
-        System.out.println("Number of households with 2 or more members: " + numberOfTwos.get());
+        System.out.println("Number of households with 2 or more members: " + twoOrMoreQuery.getSingleResult());
 
         Query earnerQuery = entityManager.createQuery("select count(h.id) from HouseholdEntity h join HouseholdearnersEntity he on h.householdEarners = he.id where he.id = 3 group by he.id");
-        Optional numberOf1OrMoreEarners = earnerQuery.getResultList().stream().findFirst();
-        System.out.println("Number of households with one or more earner: " + numberOf1OrMoreEarners.get());
+        System.out.println("Number of households with one or more earner: " + earnerQuery.getSingleResult());
 
         Query specificIncomeQuery = entityManager.createQuery("select count(h.id) from HouseholdEntity h join TotalincomeEntity t on h.totalIncome = t.id where t.id = 15 group by t.id");
-        Optional numberOfSpecificIncomes = specificIncomeQuery.getResultList().stream().findFirst();
-        System.out.println("Number of households with income between $80k and $90k: " + numberOfSpecificIncomes.get());
+        System.out.println("Number of households with income between $80k and $90k: " + specificIncomeQuery.getSingleResult());
 
         System.out.println();
 
@@ -101,6 +99,34 @@ public class CensusDBManager {
         CriteriaQuery<GeographicareaEntity> whereClause = geoAreasCriteriaQuery.select(geoAreaEntityRoot);
         TypedQuery<GeographicareaEntity> peterboroughQuery = entityManager.createQuery(whereClause);
         System.out.println(peterboroughQuery.getSingleResult().toString());
+        System.out.println();
+
+        // Question d.
+        System.out.println("d. Total Income descriptions between ids 10 and 20");
+        CriteriaQuery<TotalincomeEntity> totalIncomeCriteriaQuery = criteriaBuilder.createQuery(TotalincomeEntity.class);
+        Root<TotalincomeEntity> totalIncomeEntityRoot = totalIncomeCriteriaQuery.from(TotalincomeEntity.class);
+
+        totalIncomeCriteriaQuery
+                .where(criteriaBuilder.between(totalIncomeEntityRoot.get("id"), 10, 20))
+                .select(totalIncomeEntityRoot);
+        TypedQuery<TotalincomeEntity> totalIncomeTypedQuery = entityManager.createQuery(totalIncomeCriteriaQuery);
+        for (Object totalIncome : totalIncomeTypedQuery.getResultList()) {
+            System.out.println("Total Income: " + totalIncome.toString());
+        }
+        System.out.println();
+
+        // Question e.
+        System.out.println("d. Geographic Areas count grouped by level");
+        CriteriaQuery<GeoAreaGroup> geoAreaCountQuery = criteriaBuilder.createQuery(GeoAreaGroup.class);
+        Root<GeographicareaEntity> geoAreaCountRoot = geoAreaCountQuery.from(GeographicareaEntity.class);
+
+        geoAreaCountQuery
+                .multiselect(geoAreaCountRoot.get("level"), criteriaBuilder.count(geoAreaCountRoot.get("geographicAreaId")).alias("count"))
+                .groupBy(geoAreaCountRoot.get("level"));
+        TypedQuery<GeoAreaGroup> countsQuery = entityManager.createQuery(geoAreaCountQuery);
+        for (GeoAreaGroup group : countsQuery.getResultList()) {
+            System.out.println(group.getLevel() + ": " + group.getCount());
+        }
         System.out.println();
 
         transaction.commit();
