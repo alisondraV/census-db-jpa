@@ -7,6 +7,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Optional;
 
 public class CensusDBManager {
     public static void main(String[] args) {
@@ -41,6 +42,28 @@ public class CensusDBManager {
         for (Object totalIncome : totalIncomeList) {
             System.out.println("Total Income: " + totalIncome.toString());
         }
+        System.out.println();
+
+        // Task 5
+        System.out.println("********************************************************************************************************************************************************************************************");
+        System.out.println("TASK 5: Number of records with specified properties");
+
+        Query coupleQuery = entityManager.createQuery("select count(h.id) from HouseholdEntity h join HouseholdtypeEntity ht on h.householdType = ht.id where ht.id = 4 group by ht.id");
+        Optional numberOfCouples = coupleQuery.getResultList().stream().findFirst();
+        System.out.println("Number of couple census families without other persons in the household: " + numberOfCouples.get());
+
+        Query twoOrMoreQuery = entityManager.createQuery("select count(h.id) from HouseholdEntity h join HouseholdsizeEntity hs on h.householdSize = hs.id where hs.id = 3 group by hs.id");
+        Optional numberOfTwos = twoOrMoreQuery.getResultList().stream().findFirst();
+        System.out.println("Number of households with 2 or more members: " + numberOfTwos.get());
+
+        Query earnerQuery = entityManager.createQuery("select count(h.id) from HouseholdEntity h join HouseholdearnersEntity he on h.householdEarners = he.id where he.id = 3 group by he.id");
+        Optional numberOf1OrMoreEarners = earnerQuery.getResultList().stream().findFirst();
+        System.out.println("Number of households with one or more earner: " + numberOf1OrMoreEarners.get());
+
+        Query specificIncomeQuery = entityManager.createQuery("select count(h.id) from HouseholdEntity h join TotalincomeEntity t on h.totalIncome = t.id where t.id = 15 group by t.id");
+        Optional numberOfSpecificIncomes = specificIncomeQuery.getResultList().stream().findFirst();
+        System.out.println("Number of households with income between $80k and $90k: " + numberOfSpecificIncomes.get());
+
         System.out.println();
 
         // For task 6
