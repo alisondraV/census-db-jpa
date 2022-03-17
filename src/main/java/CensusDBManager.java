@@ -32,6 +32,17 @@ public class CensusDBManager {
         }
         System.out.println();
 
+        // Task 4
+        System.out.println("********************************************************************************************************************************************************************************************");
+        System.out.println("TASK 4: Named query to retrieve information about Total Income");
+        Query totalIncomeQuery = entityManager.createNamedQuery("findallIncome");
+        totalIncomeQuery.setMaxResults(10);
+        List totalIncomeList = totalIncomeQuery.getResultList();
+        for (Object totalIncome : totalIncomeList) {
+            System.out.println("Total Income: " + totalIncome.toString());
+        }
+        System.out.println();
+
         // For task 6
         System.out.println("********************************************************************************************************************************************************************************************");
         System.out.println("TASK 6: Criteria Query");

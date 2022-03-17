@@ -3,6 +3,13 @@ package entity;
 import javax.persistence.*;
 import java.util.Collection;
 
+@org.hibernate.annotations.NamedQueries(
+        @org.hibernate.annotations.NamedQuery(
+                name = "findallIncome",
+                query = "from TotalincomeEntity"
+        )
+)
+
 @Entity
 @Table(name = "TOTALINCOME", schema = "CENSUSDB")
 public class TotalincomeEntity {
@@ -50,6 +57,13 @@ public class TotalincomeEntity {
         int result = (int) id;
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "description='" + description + '\'' +
+                '}';
     }
 
     public Collection<HouseholdEntity> getHouseholdsById() {
